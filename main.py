@@ -4,10 +4,11 @@ from googleapiclient.errors import HttpError
 from dotenv import load_dotenv
 import os
 
-# Load environment variables from .env
-load_dotenv()
 
 app = Flask(__name__)
+
+# Load environment variables from .env
+load_dotenv()
 
 # Set DEVELOPER_KEY to the API key value from the APIs & auth > Registered apps
 # tab of https://cloud.google.com/console
@@ -57,4 +58,4 @@ def search():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True)    
