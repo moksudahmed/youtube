@@ -1,6 +1,4 @@
 Flask
-jsonify
-request
 Gunicorn
 dotenv
 google-api-python-client
