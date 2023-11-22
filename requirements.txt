@@ -1,4 +1,5 @@
 Flask
 Gunicorn
+python-dotenv
 google-api-python-client
 flask_cors
