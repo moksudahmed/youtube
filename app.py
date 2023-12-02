@@ -3,7 +3,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from dotenv import load_dotenv
 import os
-
+import requests
 
 app = Flask(__name__)
 
@@ -43,7 +43,7 @@ def youtube_search(query, max_results):
     return videos
 
 
-@app.route('/search', methods=['POST', 'GET'])
+@app.route('/api/youtube/search', methods=['POST', 'GET'])
 def search():    
     query = request.args.get('query')
     #query=request.form.get("query")
@@ -56,6 +56,27 @@ def search():
     except HttpError as e:
         return jsonify({'error': f'An HTTP error {e.resp.status} occurred: {e.content}'})
 
+@app.route('/api/youtube/video-info', methods=['GET'])
+def get_video_info():
+    try:
+        video_id = request.args.get('id')
+        if not video_id:
+            return jsonify({'error': 'Video ID is required'})
 
+        url = f'https://www.googleapis.com/youtube/v3/videos'
+        params = {
+            'id': video_id,
+            'key': DEVELOPER_KEY,
+            'part': 'snippet,statistics',
+            'fields': 'items(id,snippet,statistics)'
+        }
+
+        response = requests.get(url, params=params)
+        data = response.json()
+
+        return jsonify({'video_details': data.get('items', [])})
+    except Exception as e:
+        return jsonify({'error': str(e)})
+        
 if __name__ == '__main__':
     app.run(debug=True)    
