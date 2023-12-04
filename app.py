@@ -1,11 +1,13 @@
 from flask import Flask, jsonify, request
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+from flask_cors import CORS  # Import the CORS module
 from dotenv import load_dotenv
 import os
 import requests
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 # Load environment variables from .env
 load_dotenv()
